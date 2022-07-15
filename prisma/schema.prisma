@@ -15,6 +15,7 @@ model User {
   email       String    @unique
   password    String
   Session     Session[]
+  Credential  Credential[]
 
   @@map("users")
 }
@@ -27,4 +28,17 @@ model Session {
   user        User      @relation(fields: [userId], references: [id])
 
   @@map("sessions")
+}
+
+model Credential {
+  id          Int       @id @default(autoincrement())
+  url         String
+  username    String
+  password    String
+  title       String
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@unique([title, userId])
+  @@map("credentials")
 }
