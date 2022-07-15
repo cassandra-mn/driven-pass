@@ -13,3 +13,8 @@ export async function insert(user: UserData) {
 export async function newSession(userId: number, token: string) {
     await prisma.session.create({data: {userId, token}});
 }
+
+export async function findSession(token: string) {
+    const session = await prisma.session.findUnique({where: {token}});
+    return session;
+}
