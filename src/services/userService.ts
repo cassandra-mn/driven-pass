@@ -1,13 +1,22 @@
-import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-import {CreateUserData} from '../utils/createUserData.js';
+import {UserData} from '../utils/userData.js';
+import * as userUtils from '../utils/userUtils.js';
 import * as userRepository from '../repositories/userRepository.js';
 
-export async function create(createUserData: CreateUserData) {
-    const {email, password} = createUserData;
-    const user = await userRepository.findByEmail(email);
-    if (user) throw {type: "conflict", message: "email already registered"};
+export async function create(userData: UserData) {
+    const {email, password} = userData;
     
-    const passwordEncrypted = bcrypt.hashSync(password, 10);
+    await userUtils.validateUserExistence(email);
+    const passwordEncrypted = userUtils.encryptPassword(password);
+    
     await userRepository.insert({email, password: passwordEncrypted});
+}
+
+export async function login(userData: UserData) {
+    const user = await userUtils.validateCredentials(userData);
+    const token = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: "1d"});
+
+    await userRepository.newSession(user.id, token);
+    return token;
 }
