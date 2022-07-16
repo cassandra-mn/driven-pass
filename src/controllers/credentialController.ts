@@ -22,3 +22,10 @@ export async function findById(req: Request, res: Response) {
     const credential = await credentialService.findById(parseInt(id), parseInt(userId));
     res.status(200).send(credential);
 }
+
+export async function deleteById(req: Request, res: Response) {
+    const {id} = req.params;
+    const {id: userId} = res.locals;
+    await credentialService.deleteById(parseInt(id), parseInt(userId));
+    res.sendStatus(200);
+}

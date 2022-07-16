@@ -29,3 +29,10 @@ export async function findById(id: number, userId: number) {
     const password = cryptr.decrypt(credential.password);
     return {...credential, password};
 }
+
+export async function deleteById(id: number, userId: number) {
+    const credential = await credentialRepository.findById(id, userId);
+    if(!credential) throw {type: "not_found", message: "credential not found"};
+
+    await credentialRepository.deleteById(id, userId);
+}

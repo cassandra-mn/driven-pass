@@ -19,3 +19,7 @@ export async function findByIdAndTitle(userId: number, title: string) {
     const credential = await prisma.credential.findFirst({where: {title, userId}});
     return credential;
 }
+
+export async function deleteById(id: number, userId: number) {
+    await prisma.credential.deleteMany({where: {id, userId}});
+}
