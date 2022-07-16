@@ -15,11 +15,17 @@ export async function create(credentialData: CredentialData, userId: number) {
 
 export async function find(userId: number) {
     const credentials = await credentialRepository.find(userId);
-    return credentials;
+    const decryptedCredentials = credentials.map(credential => {
+        const password = cryptr.decrypt(credential.password);
+        return {...credential, password};
+    });
+    return decryptedCredentials;
 }
 
 export async function findById(id: number, userId: number) {
     const credential = await credentialRepository.findById(id, userId);
     if(!credential) throw {type: "not_found", message: "credential not found"};
-    return credential;
+
+    const password = cryptr.decrypt(credential.password);
+    return {...credential, password};
 }
