@@ -3,6 +3,7 @@ const cryptr = new Cryptr('secret');
 
 import {CredentialData} from '../utils/credentialData.js';
 import * as credentialRepository from '../repositories/credentialResitory.js';
+import * as credentialUtils from '../utils/credentialUtils.js';
 
 export async function create(credentialData: CredentialData, userId: number) {
     const password = cryptr.encrypt(credentialData.password);
@@ -16,23 +17,17 @@ export async function create(credentialData: CredentialData, userId: number) {
 export async function find(userId: number) {
     const credentials = await credentialRepository.find(userId);
     const decryptedCredentials = credentials.map(credential => {
-        const password = cryptr.decrypt(credential.password);
-        return {...credential, password};
+        return credentialUtils.decryptedPassword(credential);
     });
     return decryptedCredentials;
 }
 
 export async function findById(id: number, userId: number) {
-    const credential = await credentialRepository.findById(id, userId);
-    if(!credential) throw {type: "not_found", message: "credential not found"};
-
-    const password = cryptr.decrypt(credential.password);
-    return {...credential, password};
+    const credential = await credentialUtils.verifyCredential(id, userId);
+    return credentialUtils.decryptedPassword(credential);
 }
 
 export async function deleteById(id: number, userId: number) {
-    const credential = await credentialRepository.findById(id, userId);
-    if(!credential) throw {type: "not_found", message: "credential not found"};
-
+    await credentialUtils.verifyCredential(id, userId);
     await credentialRepository.deleteById(id, userId);
 }
