@@ -19,3 +19,7 @@ export async function findByIdAndTitle(userId: number, title: string) {
     const card = await prisma.card.findFirst({where: {userId, title}});     
     return card;
 }
+
+export async function deleteById(id: number, userId: number) {
+    await prisma.card.deleteMany({where: {id, userId}});
+}

@@ -28,3 +28,8 @@ export async function findById(id: number, userId: number) {
     const decryptedData = decryptedPasswordAndCvc(card);
     return decryptedData;
 }
+
+export async function deleteById(id: number, userId: number) {
+    await verifyCard(id, userId);
+    await cardRepository.deleteById(id, userId);
+}
