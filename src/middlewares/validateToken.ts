@@ -17,7 +17,7 @@ export async function validateToken(req: Request, res: Response, next: NextFunct
     
     jwt.verify(token, process.env.JWT_SECRET, (error: jwt.VerifyErrors, decoded: JWT) => {
         if (error) return res.status(401).send("token is not valid");
-        res.locals.id = decoded.id;
+        res.locals.userId = decoded.id;
     });
     
     next();
