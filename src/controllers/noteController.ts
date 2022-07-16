@@ -22,3 +22,10 @@ export async function findById(req: Request, res: Response) {
     const note = await noteService.findById(parseInt(id), userId);
     res.status(200).send(note);
 }
+
+export async function deleteById(req: Request, res: Response) {
+    const {id} = req.params;
+    const {id: userId} = res.locals;
+    await noteService.deleteById(parseInt(id), userId);
+    res.sendStatus(200);
+}

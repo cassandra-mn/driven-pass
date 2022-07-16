@@ -19,3 +19,7 @@ export async function findByIdAndTitle(userId: number, title: string) {
     const note = await prisma.note.findFirst({where: {title, userId}});
     return note;
 }
+
+export async function deleteById(id: number, userId: number) {
+    await prisma.note.deleteMany({where: {id, userId}});
+}
