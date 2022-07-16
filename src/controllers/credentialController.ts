@@ -11,12 +11,14 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function find(req: Request, res: Response) {
-    const credentials = await credentialService.find();
+    const {id} = res.locals;
+    const credentials = await credentialService.find(parseInt(id));
     res.status(200).send(credentials);
 }
 
 export async function findById(req: Request, res: Response) {
     const {id} = req.params;
-    const credential = await credentialService.findById(parseInt(id));
+    const {id: userId} = res.locals;
+    const credential = await credentialService.findById(parseInt(id), parseInt(userId));
     res.status(200).send(credential);
 }

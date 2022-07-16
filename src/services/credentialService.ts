@@ -13,13 +13,13 @@ export async function create(credentialData: CredentialData, userId: number) {
     await credentialRepository.insert({...credentialData, password, userId});
 }
 
-export async function find() {
-    const credentials = await credentialRepository.find();
+export async function find(userId: number) {
+    const credentials = await credentialRepository.find(userId);
     return credentials;
 }
 
-export async function findById(id: number) {
-    const credential = await credentialRepository.findById(id);
+export async function findById(id: number, userId: number) {
+    const credential = await credentialRepository.findById(id, userId);
     if(!credential) throw {type: "not_found", message: "credential not found"};
     return credential;
 }

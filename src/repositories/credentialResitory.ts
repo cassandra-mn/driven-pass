@@ -5,13 +5,13 @@ export async function insert(credential: CredentialData) {
     await prisma.credential.create({data: credential});
 }
 
-export async function find() {
-    const credentials = await prisma.credential.findMany();
+export async function find(userId: number) {
+    const credentials = await prisma.credential.findMany({where: {userId}});
     return credentials;
 }
 
-export async function findById(id: number) {
-    const credential = await prisma.credential.findUnique({where: {id}});
+export async function findById(id: number, userId: number) {
+    const credential = await prisma.credential.findFirst({where: {id, userId}});
     return credential;
 }
 
