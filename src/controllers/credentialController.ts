@@ -14,3 +14,9 @@ export async function find(req: Request, res: Response) {
     const credentials = await credentialService.find();
     res.status(200).send(credentials);
 }
+
+export async function findById(req: Request, res: Response) {
+    const {id} = req.params;
+    const credential = await credentialService.findById(parseInt(id));
+    res.status(200).send(credential);
+}

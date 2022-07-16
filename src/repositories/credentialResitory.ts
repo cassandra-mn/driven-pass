@@ -10,6 +10,11 @@ export async function find() {
     return credentials;
 }
 
+export async function findById(id: number) {
+    const credential = await prisma.credential.findUnique({where: {id}});
+    return credential;
+}
+
 export async function findByIdAndTitle(userId: number, title: string) {
     const credential = await prisma.credential.findFirst({where: {title, userId}});
     return credential;

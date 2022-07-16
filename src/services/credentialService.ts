@@ -17,3 +17,9 @@ export async function find() {
     const credentials = await credentialRepository.find();
     return credentials;
 }
+
+export async function findById(id: number) {
+    const credential = await credentialRepository.findById(id);
+    if(!credential) throw {type: "not_found", message: "credential not found"};
+    return credential;
+}
