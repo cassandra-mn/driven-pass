@@ -2,7 +2,7 @@ import Cryptr from 'cryptr';
 const cryptr = new Cryptr('secret');
 
 import {CardData} from '../utils/cardData.js';
-import {verifyCard} from '../utils/cardUtils.js';
+import {verifyCard, decryptedPasswordAndCvc} from '../utils/cardUtils.js';
 import * as cardRepository from '../repositories/cardRepository.js';
 
 export async function create(card: CardData) {
@@ -16,11 +16,15 @@ export async function create(card: CardData) {
 }
 
 export async function find(userId: number) {
-    const card = await cardRepository.find(userId);
-    return card;
+    const cards = await cardRepository.find(userId);
+    const decryptedData = cards.map(card => {
+        return decryptedPasswordAndCvc(card);
+    });
+    return decryptedData;
 }
 
 export async function findById(id: number, userId: number) {
     const card = await verifyCard(id, userId);
-    return card;
+    const decryptedData = decryptedPasswordAndCvc(card);
+    return decryptedData;
 }
