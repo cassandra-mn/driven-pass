@@ -24,6 +24,8 @@ export async function findById(req: Request, res: Response) {
 }
 
 export async function deleteById(req: Request, res: Response) {
-
-    res.sendStatus(501);
+    const {id} = req.params;
+    const {userId} = res.locals;
+    await wifiService.deleteById(parseInt(id), userId);
+    res.sendStatus(200);
 }

@@ -23,3 +23,8 @@ export async function findById(id: number, userId: number) {
     const decryptedData = decryptedPassword(wifi);
     return decryptedData;
 }
+
+export async function deleteById(id: number, userId: number) {
+    await verifyWifi(id, userId);
+    await wifiRepository.deleteById(id, userId);
+}
