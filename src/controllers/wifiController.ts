@@ -1,8 +1,13 @@
 import {Request, Response} from 'express';
 
-export async function create(req: Request, res: Response) {
+import {WifiData} from '../utils/wifiData.js';
+import * as wifiService from '../services/wifiService.js';
 
-    res.sendStatus(501);
+export async function create(req: Request, res: Response) {
+    const wifi: WifiData = req.body;
+    const {userId} = res.locals;
+    await wifiService.create({...wifi, userId});
+    res.sendStatus(201);
 }
 
 export async function find(req: Request, res: Response) {
