@@ -11,13 +11,16 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function find(req: Request, res: Response) {
-
-    res.sendStatus(501);
+    const {userId} = res.locals;
+    const wifi = await wifiService.find(userId);
+    res.status(200).send(wifi);
 }
 
 export async function findById(req: Request, res: Response) {
-
-    res.sendStatus(501);
+    const {id} = req.params;
+    const {userId} = res.locals;
+    const wifi = await wifiService.findById(parseInt(id), userId);
+    res.status(200).send(wifi);
 }
 
 export async function deleteById(req: Request, res: Response) {
