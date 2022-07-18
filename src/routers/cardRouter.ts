@@ -9,6 +9,6 @@ const cardRouter = Router();
 cardRouter.post('/cards/create', validateSchemaMiddleware(CardSchema), create);
 cardRouter.get('/cards', find);
 cardRouter.get('/cards/:id', findById);
-cardRouter.post('/cards/delete/:id', deleteById);
+cardRouter.delete('/cards/delete/:id', deleteById);
 
 export default cardRouter;

@@ -9,6 +9,6 @@ const wifiRouter = Router();
 wifiRouter.post('/wifi/create', validateSchemaMiddleware(wifiSchema), create);
 wifiRouter.get('/wifi', find);
 wifiRouter.get('/wifi/:id', findById);
-wifiRouter.post('/wifi/delete/:id', deleteById);
+wifiRouter.delete('/wifi/delete/:id', deleteById);
 
 export default wifiRouter;

@@ -9,6 +9,6 @@ const docsRouter = Router();
 docsRouter.post('/docs/create', validateSchemaMiddleware(docsSchema), create);
 docsRouter.get('/docs', find);
 docsRouter.get('/docs/:id', findById);
-docsRouter.post('/docs/delete/:id', deleteById);
+docsRouter.delete('/docs/delete/:id', deleteById);
 
 export default docsRouter;

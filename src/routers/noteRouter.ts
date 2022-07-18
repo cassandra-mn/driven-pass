@@ -9,6 +9,6 @@ const noteRouter = Router();
 noteRouter.post('/notes/create', validateSchemaMiddleware(noteSchema), create);
 noteRouter.get('/notes', find);
 noteRouter.get('/notes/:id', findById);
-noteRouter.post('/notes/delete/:id', deleteById);
+noteRouter.delete('/notes/delete/:id', deleteById);
 
 export default noteRouter;
