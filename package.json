@@ -5,7 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon src/index.ts",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
